@@ -56,27 +56,47 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-//playGame
-function playGame() {
-    humanScore = 0;
-    computerScore = 0;
+// //playGame
+// function playGame() {
+//     humanScore = 0;
+//     computerScore = 0;
 
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
-        console.log(`Round ${i + 1}: Human: ${humanScore}, Computer: ${computerScore}`);
-    }
+//     for (let i = 0; i < 5; i++) {
+//         const humanSelection = getHumanChoice();
+//         const computerSelection = getComputerChoice();
+//         playRound(humanSelection, computerSelection);
+//         console.log(`Round ${i + 1}: Human: ${humanScore}, Computer: ${computerScore}`);
+//     }
 
-    // Declare the winner
-    if (humanScore > computerScore) {
-        console.log("Congratulations! You won the game!");
-    } else if (humanScore < computerScore) {
-        console.log("Sorry, the computer won the game.");
-    } else {
-        console.log("It's a tie!");
-    }
-}
+//     // Declare the winner
+//     if (humanScore > computerScore) {
+//         console.log("Congratulations! You won the game!");
+//     } else if (humanScore < computerScore) {
+//         console.log("Sorry, the computer won the game.");
+//     } else {
+//         console.log("It's a tie!");
+//     }
+// }
 
-// Start the game
-playGame();
+// // Start the game
+// playGame();
+
+const rock= document.querySelector("#rock");
+rock.setAttribute("style", "background: lightblue;");
+rock.addEventListener("click", (e) =>{
+    playRound("rock",getComputerChoice());
+    // e.target.style.background = "#555555";
+} )
+const paper= document.querySelector("#paper");
+paper.setAttribute("style", "background: lime;");
+paper.addEventListener("click", (e) =>{
+    playRound("paper",getComputerChoice());
+    // e.target.style.background = "#555555";
+} )
+
+const scissors= document.querySelector("#scissors");
+scissors.setAttribute("style", "background: pink;");
+scissors.addEventListener("click", (e) =>{
+    playRound("scissors",getComputerChoice());
+    // e.target.style.background = "#555555";
+} )
