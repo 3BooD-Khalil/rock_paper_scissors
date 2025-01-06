@@ -1,102 +1,98 @@
-console.log("Meow 🐱")
+console.log("Meow 🐱");
 
-
-function getComputerChoice(){
-    let x=Math.floor(Math.random()*3);
-    if(x===0){
-        return "rock";
-    }
-        
-    else if (x===1){
-        return "paper";
-    }
-        
-    else if(x===2){
-        return "scissors";
-    }
-        
-
+function getComputerChoice() {
+    let x = Math.floor(Math.random() * 3);
+    if (x === 0) return "rock";
+    if (x === 1) return "paper";
+    return "scissors";
 }
 
+// Scores and round tracker
+let humanScore = 0;
+let computerScore = 0;
+let currentRound = 0;
+const totalRounds = 5;
 
+// UI Elements
+const rock = document.querySelector("#rock");
+rock.style.background = "lightblue";
 
-// HumanChoiceFunction
-function getHumanChoice() {
-    const choice = prompt("Enter your choice: rock, paper, or scissors").toLowerCase();
+const paper = document.querySelector("#paper");
+paper.style.background = "lime";
 
-    if (choice === "rock" || choice === "paper" || choice === "scissors") {
-        return choice;
-    } else {
-        alert("Invalid choice. Please enter rock, paper, or scissors.");
-        return getHumanChoice();
-    }
-}
+const scissors = document.querySelector("#scissors");
+scissors.style.background = "pink";
 
-//score
-let humanScore=0;
-let computerScore=0;
-
-//playRound
-
+// Play a single round
 function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
 
     if (humanChoice === computerChoice) {
-        console.log(`It's a tie! Both chose ${humanChoice}`);
+        console.log(`Round ${currentRound + 1}: It's a tie! Both chose ${humanChoice}`);
     } else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "scissors" && computerChoice === "paper") ||
         (humanChoice === "paper" && computerChoice === "rock")
     ) {
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+        console.log(`Round ${currentRound + 1}: You win! ${humanChoice} beats ${computerChoice}`);
         humanScore++;
     } else {
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+        console.log(`Round ${currentRound + 1}: You lose! ${computerChoice} beats ${humanChoice}`);
         computerScore++;
+    }
+
+    console.log(`Score: Human - ${humanScore}, Computer - ${computerScore}`);
+    currentRound++;
+
+    if (currentRound === totalRounds) {
+        declareWinner();
     }
 }
 
-// //playGame
-// function playGame() {
-//     humanScore = 0;
-//     computerScore = 0;
+// Declare the winner
+function declareWinner() {
+    if (humanScore > computerScore) {
+        console.log("Congratulations! You won the game!");
+    } else if (humanScore < computerScore) {
+        console.log("Sorry, the computer won the game.");
+    } else {
+        console.log("Meow! 🐱 It's a tie!");
+    }
 
-//     for (let i = 0; i < 5; i++) {
-//         const humanSelection = getHumanChoice();
-//         const computerSelection = getComputerChoice();
-//         playRound(humanSelection, computerSelection);
-//         console.log(`Round ${i + 1}: Human: ${humanScore}, Computer: ${computerScore}`);
-//     }
+    // Reset the game
+    resetGame();
+}
 
-//     // Declare the winner
-//     if (humanScore > computerScore) {
-//         console.log("Congratulations! You won the game!");
-//     } else if (humanScore < computerScore) {
-//         console.log("Sorry, the computer won the game.");
-//     } else {
-//         console.log("It's a tie!");
-//     }
-// }
+// Reset the game
+function resetGame() {
+    humanScore = 0;
+    computerScore = 0;
+    currentRound = 0;
+    console.log("Game reset. Play again!");
+}
 
-// // Start the game
-// playGame();
+// Event Listeners
+rock.addEventListener("click", () => {
+    if (currentRound < totalRounds) {
+        playRound("rock", getComputerChoice());
+    }
+});
 
-const rock= document.querySelector("#rock");
-rock.setAttribute("style", "background: lightblue;");
-rock.addEventListener("click", (e) =>{
-    playRound("rock",getComputerChoice());
-    // e.target.style.background = "#555555";
-} )
-const paper= document.querySelector("#paper");
-paper.setAttribute("style", "background: lime;");
-paper.addEventListener("click", (e) =>{
-    playRound("paper",getComputerChoice());
-    // e.target.style.background = "#555555";
-} )
+paper.addEventListener("click", () => {
+    if (currentRound < totalRounds) {
+        playRound("paper", getComputerChoice());
+    }
+});
 
-const scissors= document.querySelector("#scissors");
-scissors.setAttribute("style", "background: pink;");
-scissors.addEventListener("click", (e) =>{
-    playRound("scissors",getComputerChoice());
-    // e.target.style.background = "#555555";
-} )
+scissors.addEventListener("click", () => {
+    if (currentRound < totalRounds) {
+        playRound("scissors", getComputerChoice());
+    }
+});
+
+// Start the game
+function playGame() {
+    console.log("Game started! Make your choice.");
+}
+
+playGame();
