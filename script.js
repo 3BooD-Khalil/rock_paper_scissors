@@ -1,5 +1,4 @@
-console.log("Meow 🐱");
-
+const container= document.querySelector(".container");
 function getComputerChoice() {
     let x = Math.floor(Math.random() * 3);
     if (x === 0) return "rock";
@@ -23,12 +22,20 @@ paper.style.background = "lime";
 const scissors = document.querySelector("#scissors");
 scissors.style.background = "pink";
 
+const game=document.querySelector(".game");
+// const round=document.querySelector(".round");
+
 // Play a single round
 function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
 
     if (humanChoice === computerChoice) {
         console.log(`Round ${currentRound + 1}: It's a tie! Both chose ${humanChoice}`);
+        // round.textContent="Round"+ currentRound + 1+": It's a tie! Both chose " +humanChoice;
+        const round=document.createElement("p");
+        round.textContent=`Round ${currentRound + 1}: It's a tie! Both chose ${humanChoice}`;
+        game.appendChild(round);
+
     } else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "scissors" && computerChoice === "paper") ||
@@ -36,28 +43,49 @@ function playRound(humanChoice, computerChoice) {
     ) {
         console.log(`Round ${currentRound + 1}: You win! ${humanChoice} beats ${computerChoice}`);
         humanScore++;
+        const round=document.createElement("p");
+        round.textContent=`Round ${currentRound + 1}: You win! ${humanChoice} beats ${computerChoice}`;
+        game.appendChild(round);
     } else {
         console.log(`Round ${currentRound + 1}: You lose! ${computerChoice} beats ${humanChoice}`);
         computerScore++;
+        const round=document.createElement("p");
+        round.textContent=`Round ${currentRound + 1}: You lose! ${computerChoice} beats ${humanChoice}`;
+        game.appendChild(round);
     }
 
     console.log(`Score: Human - ${humanScore}, Computer - ${computerScore}`);
     currentRound++;
+    const curRound=document.createElement("p");
+    curRound.textContent=`Score: Human - ${humanScore}, Computer - ${computerScore}`;
+    curRound.style.color= 'blue';
+    game.appendChild(curRound);
 
     if (currentRound === totalRounds) {
         declareWinner();
     }
 }
 
+
+
 // Declare the winner
 function declareWinner() {
+    const winner=document.createElement('p');
+
     if (humanScore > computerScore) {
         console.log("Congratulations! You won the game!");
+        winner.textContent="Congratulations! You won the game!";
     } else if (humanScore < computerScore) {
         console.log("Sorry, the computer won the game.");
+        winner.textContent="Sorry, the computer won the game.";
+
     } else {
         console.log("Meow! 🐱 It's a tie!");
+        winner.textContent="Meow! 🐱 It's a tie!";
+
     }
+    winner.setAttribute("style", "font-size: 28px; color: red")
+    game.appendChild(winner);
 
     // Reset the game
     resetGame();
