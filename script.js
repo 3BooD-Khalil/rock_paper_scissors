@@ -30,36 +30,25 @@ function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
 
     if (humanChoice === computerChoice) {
-        console.log(`Round ${currentRound + 1}: It's a tie! Both chose ${humanChoice}`);
         // round.textContent="Round"+ currentRound + 1+": It's a tie! Both chose " +humanChoice;
-        const round=document.createElement("p");
-        round.textContent=`Round ${currentRound + 1}: It's a tie! Both chose ${humanChoice}`;
-        game.appendChild(round);
+        appendMessage(`Round ${currentRound + 1}: It's a tie! Both chose ${humanChoice}`);
 
     } else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "scissors" && computerChoice === "paper") ||
         (humanChoice === "paper" && computerChoice === "rock")
     ) {
-        console.log(`Round ${currentRound + 1}: You win! ${humanChoice} beats ${computerChoice}`);
         humanScore++;
-        const round=document.createElement("p");
-        round.textContent=`Round ${currentRound + 1}: You win! ${humanChoice} beats ${computerChoice}`;
-        game.appendChild(round);
+        appendMessage(`Round ${currentRound + 1}: You win! ${humanChoice} beats ${computerChoice}`);
     } else {
-        console.log(`Round ${currentRound + 1}: You lose! ${computerChoice} beats ${humanChoice}`);
+        // console.log(`Round ${currentRound + 1}: You lose! ${computerChoice} beats ${humanChoice}`);
         computerScore++;
-        const round=document.createElement("p");
-        round.textContent=`Round ${currentRound + 1}: You lose! ${computerChoice} beats ${humanChoice}`;
-        game.appendChild(round);
+        appendMessage(`Round ${currentRound + 1}: You lose! ${computerChoice} beats ${humanChoice}`);
     }
 
-    console.log(`Score: Human - ${humanScore}, Computer - ${computerScore}`);
+    // console.log(`Score: Human - ${humanScore}, Computer - ${computerScore}`);
     currentRound++;
-    const curRound=document.createElement("p");
-    curRound.textContent=`Score: Human - ${humanScore}, Computer - ${computerScore}`;
-    curRound.style.color= 'blue';
-    game.appendChild(curRound);
+    appendMessage(`Score: Human - ${humanScore}, Computer - ${computerScore}`,"blue");
 
     if (currentRound === totalRounds) {
         declareWinner();
@@ -73,14 +62,11 @@ function declareWinner() {
     const winner=document.createElement('p');
 
     if (humanScore > computerScore) {
-        console.log("Congratulations! You won the game!");
         winner.textContent="Congratulations! You won the game!";
     } else if (humanScore < computerScore) {
-        console.log("Sorry, the computer won the game.");
         winner.textContent="Sorry, the computer won the game.";
 
     } else {
-        console.log("Meow! 🐱 It's a tie!");
         winner.textContent="Meow! 🐱 It's a tie!";
 
     }
@@ -88,15 +74,22 @@ function declareWinner() {
     game.appendChild(winner);
 
     // Reset the game
-    resetGame();
+    rstButton=document.createElement('button');
+    rstButton.textContent="Reset Game";
+    rstButton.style.background='green';
+    rstButton.style.color='white';
+    rstButton.addEventListener("click",resetGame);
+    game.appendChild(rstButton);
 }
+
 
 // Reset the game
 function resetGame() {
     humanScore = 0;
     computerScore = 0;
     currentRound = 0;
-    console.log("Game reset. Play again!");
+    game.innerHTML='';
+    appendMessage("Game restarted, Enjoy 😊","green");
 }
 
 // Event Listeners
@@ -117,10 +110,17 @@ scissors.addEventListener("click", () => {
         playRound("scissors", getComputerChoice());
     }
 });
+// Append messages to the game container
+function appendMessage(message,color="black") {
+    const msgElement = document.createElement("p");
+    msgElement.textContent = message;
+    msgElement.style.color = color;
+    game.appendChild(msgElement);
+}
 
 // Start the game
 function playGame() {
-    console.log("Game started! Make your choice.");
+    // console.log("Game started! Make your choice.");
 }
 
 playGame();
